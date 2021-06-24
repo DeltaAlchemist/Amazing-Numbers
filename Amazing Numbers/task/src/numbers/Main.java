@@ -30,14 +30,37 @@ public class Main {
                     }
                 } else if (x < 1) {
                     System.out.println("\nThe second parameter should be a natural number.\n");
-                } else if (numArr.length == 3) {
-                    if (!checkThirdProperty(numArr[2])) {
-                        System.out.println("\nThe property [" + numArr[2].toUpperCase() + "] is wrong.");
-                        System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]\n");
-                    } else {
-                        // Results
-                        printResults(x, numArr, num);
-                        System.out.println();
+                } else if (numArr.length >= 3) {
+                    if (numArr.length == 3) {
+                        if (checkThirdProperty(numArr[2])) {
+                            System.out.println("\nThe property [" + numArr[2].toUpperCase() + "] is wrong.");
+                            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]\n");
+                        } else {
+                            // Results
+                            printResults(x, numArr, num);
+                            System.out.println();
+                        }
+                    } else if (numArr.length == 4) {
+                        if (checkThirdProperty(numArr[2]) && checkThirdProperty(numArr[3])) {
+                            System.out.println("\nThe properties [" + numArr[2].toUpperCase() +
+                                    ", " + numArr[3].toUpperCase() + "] are wrong.");
+                            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]\n");
+                        } else if (checkThirdProperty(numArr[2]) || checkThirdProperty(numArr[3])) {
+                            if (checkThirdProperty(numArr[2])) {
+                                System.out.println("\nThe property [" + numArr[2].toUpperCase() + "] is wrong.");
+                            } else {
+                                System.out.println("\nThe property [" + numArr[3].toUpperCase() + "] is wrong.");
+                            }
+                            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]\n");
+                        } else {
+                            if (exclusiveProps(numArr[2], numArr[3])) {
+                                errorExclusiveProps(numArr[2], numArr[3]);
+                            } else {
+                                // Results
+                                printResults(x, numArr, num);
+                                System.out.println();
+                            }
+                        }
                     }
                 } else {
                     // Results if there's not a third parameter
@@ -129,7 +152,29 @@ public class Main {
                 break;
             }
         }
-        return check;
+        return !check;
+    }
+
+    static boolean exclusiveProps(String prop1, String prop2) {
+        boolean check;
+        if (prop1.equalsIgnoreCase("even") && prop2.equalsIgnoreCase("odd")) {
+            check = false;
+        } else if (prop2.equalsIgnoreCase("even") && prop1.equalsIgnoreCase("odd")) {
+            check = false;
+        } else if (prop1.equalsIgnoreCase("duck") && prop2.equalsIgnoreCase("spy")) {
+            check = false;
+        } else if (prop2.equalsIgnoreCase("duck") && prop1.equalsIgnoreCase("spy")) {
+            check = false;
+        } else if (prop1.equalsIgnoreCase("square") && prop2.equalsIgnoreCase("sunny")) {
+            check = false;
+        } else check = !prop2.equalsIgnoreCase("square") || !prop1.equalsIgnoreCase("sunny");
+        return !check;
+    }
+
+    static void errorExclusiveProps(String prop1, String prop2) {
+        System.out.printf("\nThe request contains mutually exclusive properties: [%s, %s]\n",
+                prop1.toUpperCase(), prop2.toUpperCase());
+        System.out.println("There are no numbers with these properties.\n");
     }
 
     public static void printResults(int x, String[] numArr, long num) {
@@ -147,7 +192,7 @@ public class Main {
             System.out.println("odd: " + isOdd(num));
             System.out.println();
         } else {
-            if (numArr.length == 3) {
+            if (numArr.length <= 3) {
                 boolean available = false;
                 String[] availableProps = {"buzz", "duck", "palindromic", "gapful", "spy",
                         "even", "odd", "square", "sunny"};
