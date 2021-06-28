@@ -1,5 +1,6 @@
 # Amazing-Numbers
 Project made for Jetbrains Academy 30-day Challenge (jun-2021) created in Java.
+
 In this project, there are some pretty 'strange' numbers, some of them are:
 
 - Buzz Numbers:
