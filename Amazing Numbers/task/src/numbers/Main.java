@@ -34,7 +34,8 @@ public class Main {
                     if (numArr.length == 3) {
                         if (checkThirdProperty(numArr[2])) {
                             System.out.println("\nThe property [" + numArr[2].toUpperCase() + "] is wrong.");
-                            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]\n");
+                            System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, " +
+                                    "SPY, SQUARE, SUNNY]\n");
                         } else {
                             // Results
                             printResults(x, numArr, num);
@@ -44,14 +45,16 @@ public class Main {
                         if (checkThirdProperty(numArr[2]) && checkThirdProperty(numArr[3])) {
                             System.out.println("\nThe properties [" + numArr[2].toUpperCase() +
                                     ", " + numArr[3].toUpperCase() + "] are wrong.");
-                            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]\n");
+                            System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, " +
+                                    "SPY, SQUARE, SUNNY]\n");
                         } else if (checkThirdProperty(numArr[2]) || checkThirdProperty(numArr[3])) {
                             if (checkThirdProperty(numArr[2])) {
                                 System.out.println("\nThe property [" + numArr[2].toUpperCase() + "] is wrong.");
                             } else {
                                 System.out.println("\nThe property [" + numArr[3].toUpperCase() + "] is wrong.");
                             }
-                            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]\n");
+                            System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, " +
+                                    "SPY, SQUARE, SUNNY]\n");
                         } else {
                             if (exclusiveProps(numArr[2], numArr[3])) {
                                 errorExclusiveProps(numArr[2], numArr[3]);
@@ -192,104 +195,11 @@ public class Main {
             System.out.println("odd: " + isOdd(num));
             System.out.println();
         } else {
-            if (numArr.length <= 3) {
-                boolean available = false;
-                String[] availableProps = {"buzz", "duck", "palindromic", "gapful", "spy",
-                        "even", "odd", "square", "sunny"};
-                for (String a : availableProps) {
-                    if (a.equals(numArr[2].toLowerCase())) {
-                        available = true;
-                        break;
-                    }
-                }
-                if (available) {
-                    long availableRange = Long.parseLong(numArr[1]);
-                    long checkSecondParam = 0;
-                    long i = num;
-                    switch (numArr[2].toLowerCase()) {
-                        case "buzz":
-                            while (checkSecondParam < availableRange) {
-                                if (isBuzz(i)) {
-                                    checkSecondParam++;
-                                    printProps(i);
-                                }
-                                i++;
-                            }
-                            break;
-                        case "spy":
-                            while (checkSecondParam < availableRange) {
-                                if (isSpy(i)) {
-                                    checkSecondParam++;
-                                    printProps(i);
-                                }
-                                i++;
-                            }
-                            break;
-                        case "even":
-                            while (checkSecondParam < availableRange) {
-                                if (isEven(i)) {
-                                    checkSecondParam++;
-                                    printProps(i);
-                                }
-                                i++;
-                            }
-                            break;
-                        case "odd":
-                            while (checkSecondParam < availableRange) {
-                                if (isOdd(i)) {
-                                    checkSecondParam++;
-                                    printProps(i);
-                                }
-                                i++;
-                            }
-                            break;
-                        case "duck":
-                            while (checkSecondParam < availableRange) {
-                                if (isDuck(i)) {
-                                    checkSecondParam++;
-                                    printProps(i);
-                                }
-                                i++;
-                            }
-                            break;
-                        case "palindromic":
-                            while (checkSecondParam < availableRange) {
-                                if (isPalindrome(i)) {
-                                    checkSecondParam++;
-                                    printProps(i);
-                                }
-                                i++;
-                            }
-                            break;
-                        case "square":
-                            while (checkSecondParam < availableRange) {
-                                if (isSquare(i)) {
-                                    checkSecondParam++;
-                                    printProps(i);
-                                }
-                                i++;
-                            }
-                            break;
-                        case "sunny":
-                            while (checkSecondParam < availableRange) {
-                                if (isSunny(i)) {
-                                    checkSecondParam++;
-                                    printProps(i);
-                                }
-                                i++;
-                            }
-                        default: // Gapful
-                            while (checkSecondParam < availableRange) {
-                                if (isGapful(i)) {
-                                    checkSecondParam++;
-                                    printProps(i);
-                                }
-                                i++;
-                            }
-                            break;
-                    }
-                    System.out.println();
-                }
+            if (numArr.length == 3) {
+                identifyNumA(numArr, num);
+
+            } else if (numArr.length == 4) {
+                identifyNumB(numArr, num);
 
             } else {
                 for (int y = 0; y < x; y++) {
@@ -316,6 +226,639 @@ public class Main {
         }
 
     }
+
+    private static void identifyNumA(String[] numArr, long num) {
+        long availableRange = Long.parseLong(numArr[1]);
+        long checkSecondParam = 0;
+        long i = num;
+        switch (numArr[2].toLowerCase()) {
+            case "buzz":
+                while (checkSecondParam < availableRange) {
+                    if (isBuzz(i)) {
+                        checkSecondParam++;
+                        printProps(i);
+                    }
+                    i++;
+                }
+                break;
+            case "spy":
+                while (checkSecondParam < availableRange) {
+                    if (isSpy(i)) {
+                        checkSecondParam++;
+                        printProps(i);
+                    }
+                    i++;
+                }
+                break;
+            case "even":
+                while (checkSecondParam < availableRange) {
+                    if (isEven(i)) {
+                        checkSecondParam++;
+                        printProps(i);
+                    }
+                    i++;
+                }
+                break;
+            case "odd":
+                while (checkSecondParam < availableRange) {
+                    if (isOdd(i)) {
+                        checkSecondParam++;
+                        printProps(i);
+                    }
+                    i++;
+                }
+                break;
+            case "duck":
+                while (checkSecondParam < availableRange) {
+                    if (isDuck(i)) {
+                        checkSecondParam++;
+                        printProps(i);
+                    }
+                    i++;
+                }
+                break;
+            case "palindromic":
+                while (checkSecondParam < availableRange) {
+                    if (isPalindrome(i)) {
+                        checkSecondParam++;
+                        printProps(i);
+                    }
+                    i++;
+                }
+                break;
+            case "square":
+                while (checkSecondParam < availableRange) {
+                    if (isSquare(i)) {
+                        checkSecondParam++;
+                        printProps(i);
+                    }
+                    i++;
+                }
+                break;
+            case "sunny":
+                while (checkSecondParam < availableRange) {
+                    if (isSunny(i)) {
+                        checkSecondParam++;
+                        printProps(i);
+                    }
+                    i++;
+                }
+            default: // Gapful
+                while (checkSecondParam < availableRange) {
+                    if (isGapful(i)) {
+                        checkSecondParam++;
+                        printProps(i);
+                    }
+                    i++;
+                }
+                break;
+
+        }
+        System.out.println();
+
+    }
+
+    public static void identifyNumB(String[] numArr, long num) {
+        long availableRange = Long.parseLong(numArr[1]);
+        long checkSecondParam = 0;
+        long i = num;
+
+        switch (numArr[2].toLowerCase()) {
+            case "buzz":
+                if (numArr[3].equalsIgnoreCase("spy")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isBuzz(i) && isSpy(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("even")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isBuzz(i) && isEven(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("odd")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isBuzz(i) && isOdd(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("duck")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isBuzz(i) && isDuck(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("palindromic")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isBuzz(i) && isPalindrome(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("square")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isBuzz(i) && isSquare(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("sunny")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isBuzz(i) && isSunny(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else {
+                    while (checkSecondParam < availableRange) {
+                        if (isBuzz(i) && isGapful(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                }
+                break;
+            case "spy":
+                if (numArr[3].equalsIgnoreCase("buzz")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSpy(i) && isBuzz(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("even")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSpy(i) && isEven(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("odd")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSpy(i) && isOdd(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("palindromic")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSpy(i) && isPalindrome(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("square")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSpy(i) && isSquare(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("sunny")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSpy(i) && isSunny(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else {
+                    while (checkSecondParam < availableRange) {
+                        if (isSpy(i) && isGapful(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                }
+                break;
+            case "even":
+                if (numArr[3].equalsIgnoreCase("buzz")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isEven(i) && isBuzz(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("spy")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isEven(i) && isSpy(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("duck")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isEven(i) && isDuck(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("palindromic")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isEven(i) && isPalindrome(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("square")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isEven(i) && isSquare(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("sunny")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isEven(i) && isSunny(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else {
+                    while (checkSecondParam < availableRange) {
+                        if (isEven(i) && isGapful(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                }
+                break;
+            case "odd":
+                if (numArr[3].equalsIgnoreCase("buzz")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isOdd(i) && isBuzz(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("spy")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isOdd(i) && isSpy(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("duck")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isOdd(i) && isDuck(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("palindromic")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isOdd(i) && isPalindrome(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("square")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isOdd(i) && isSquare(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("sunny")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isOdd(i) && isSunny(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else {
+                    while (checkSecondParam < availableRange) {
+                        if (isOdd(i) && isGapful(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                }
+                break;
+            case "duck":
+                if (numArr[3].equalsIgnoreCase("buzz")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isDuck(i) && isBuzz(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("even")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isDuck(i) && isEven(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("odd")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isDuck(i) && isOdd(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("palindromic")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isDuck(i) && isPalindrome(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("square")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isDuck(i) && isSquare(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("sunny")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isDuck(i) && isSunny(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else {
+                    while (checkSecondParam < availableRange) {
+                        if (isDuck(i) && isGapful(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                }
+                break;
+            case "palindromic":
+                if (numArr[3].equalsIgnoreCase("buzz")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isPalindrome(i) && isBuzz(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("spy")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isPalindrome(i) && isSpy(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("even")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isPalindrome(i) && isEven(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("odd")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isPalindrome(i) && isOdd(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("duck")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isPalindrome(i) && isDuck(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("square")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isPalindrome(i) && isSquare(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("sunny")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isPalindrome(i) && isSunny(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else {
+                    while (checkSecondParam < availableRange) {
+                        if (isPalindrome(i) && isGapful(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                }
+                break;
+            case "square":
+                if (numArr[3].equalsIgnoreCase("spy")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSquare(i) && isSpy(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("even")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSquare(i) && isEven(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("odd")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSquare(i) && isOdd(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("duck")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSquare(i) && isDuck(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("palindromic")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSquare(i) && isPalindrome(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else {
+                    while (checkSecondParam < availableRange) {
+                        if (isSquare(i) && isGapful(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                }
+                break;
+            case "sunny":
+                if (numArr[3].equalsIgnoreCase("spy")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSunny(i) && isSpy(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("even")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSunny(i) && isEven(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("odd")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSunny(i) && isOdd(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("duck")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSunny(i) && isDuck(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("palindromic")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isSunny(i) && isPalindrome(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else {
+                    while (checkSecondParam < availableRange) {
+                        if (isBuzz(i) && isGapful(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                }
+                break;
+            default: // Gapful
+                if (numArr[3].equalsIgnoreCase("spy")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isGapful(i) && isSpy(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("even")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isGapful(i) && isEven(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("odd")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isGapful(i) && isOdd(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("duck")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isGapful(i) && isDuck(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("palindromic")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isGapful(i) && isPalindrome(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("square")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isGapful(i) && isSquare(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                } else if (numArr[3].equalsIgnoreCase("sunny")) {
+                    while (checkSecondParam < availableRange) {
+                        if (isGapful(i) && isSunny(i)) {
+                            checkSecondParam++;
+                            printProps(i);
+                        }
+                        i++;
+                    }
+                }
+                break;
+        }
+        System.out.println();
+    }
+
 
     private static void printProps(long i) {
         String[] props = new String[7];
@@ -355,13 +898,13 @@ public class Main {
         if (isOdd(i)) {
             props[j] = "odd";
         }
-        StringBuilder strprops = new StringBuilder();
+        StringBuilder strProps = new StringBuilder();
         for (String s : props) {
             if (s != null) {
-                strprops.append(s).append(", ");
+                strProps.append(s).append(", ");
             }
         }
-        System.out.print("\n" + i + " is " + strprops.substring(0, strprops.length() - 2));
+        System.out.print("\n" + i + " is " + strProps.substring(0, strProps.length() - 2));
     }
 
     public static void printInstructions() {
@@ -372,6 +915,7 @@ public class Main {
         System.out.println("  * the first parameter represents a starting number;");
         System.out.println("  * the second parameter shows how many consecutive numbers are to be printed;");
         System.out.println("- two natural numbers and a property to search for;");
+        System.out.println("- two natural numbers and two properties to search for;");
         System.out.println("- separate the parameters with one space;");
         System.out.println("- enter 0 to exit.");
         System.out.println();
