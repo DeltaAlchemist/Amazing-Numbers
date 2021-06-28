@@ -270,6 +270,14 @@ public class Main {
                                 i++;
                             }
                             break;
+                        case "sunny":
+                            while (checkSecondParam < availableRange) {
+                                if (isSunny(i)) {
+                                    checkSecondParam++;
+                                    printProps(i);
+                                }
+                                i++;
+                            }
                         default: // Gapful
                             while (checkSecondParam < availableRange) {
                                 if (isGapful(i)) {
