@@ -17,3 +17,6 @@ A number is said to be Spy if the sum of all digits is equal to the product of a
 
 - Sunny and square numbers:
 N is a sunny number if N+1 is a perfect square number. In mathematics, a square number or a perfect square is an integer that is the square of an integer; in other words, it is the product of an integer with itself.
+
+- Jumping Numbers:
+A number is a Jumping number if the adjacent digits inside the number differ by 1. The difference between 9 and 0 is not considered as 1. Single-digit numbers are considered Jumping numbers. For example, 78987, and 4343456 are Jumping numbers, but 796 and 89098 are not.
