@@ -12,9 +12,9 @@ public class Main {
 
         while (true) {
             System.out.print("\nEnter a request: ");
-            String x = sc.nextLine();
+            String input = sc.nextLine();
 
-            if (x.length() == 0) {
+            if (input.length() == 0) {
                 printInstructions();
                 continue;
             }
@@ -25,14 +25,14 @@ public class Main {
             HashSet<Properties> properties = new HashSet<>();
 
             try {
-                String[] ss = x.split(" ");
-                n = Long.parseLong(ss[0]);
-                if (ss.length > 1) {
+                String[] inputArr = input.split(" ");
+                n = Long.parseLong(inputArr[0]);
+                if (inputArr.length > 1) {
                     ism = true;
-                    m = Long.parseLong(ss[1]);
+                    m = Long.parseLong(inputArr[1]);
                 }
-                if (ss.length > 2) {
-                    props = new Vector<>(Arrays.asList(ss).subList(2, ss.length));
+                if (inputArr.length > 2) {
+                    props = new Vector<>(Arrays.asList(inputArr).subList(2, inputArr.length));
                 }
             } catch (NumberFormatException e) {
                 System.out.print("\nThe first parameter should be a natural number or zero.\n");
@@ -57,7 +57,7 @@ public class Main {
 
             if (props != null) {
                 HashSet<String> hashSet = new HashSet<>(Arrays.asList("EVEN", "ODD", "BUZZ", "DUCK", "PALINDROMIC",
-                        "GAPFUL", "SPY", "SQUARE", "SUNNY", "JUMPING"));
+                        "GAPFUL", "SPY", "SQUARE", "SUNNY", "JUMPING", "HAPPY"));
 
                 for (int i = 0; i < props.size(); ++i) {
                     props.setElementAt(props.elementAt(i).toUpperCase(Locale.ROOT), i);
@@ -84,7 +84,7 @@ public class Main {
                         System.out.print(wrong.elementAt(wrong.size() - 1) + "] are wrong\n");
                     }
                     System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, " +
-                            "SQUARE, SUNNY, JUMPING]\n");
+                            "SQUARE, SUNNY, JUMPING, HAPPY]\n");
                     continue;
                 }
 
@@ -103,6 +103,12 @@ public class Main {
                             "There are no numbers with these properties.\n");
                     continue;
                 }
+                if (properties.contains(Properties.HAPPY) && properties.contains(Properties.SAD)) {
+                    System.out.print("\nThe request contains mutually exclusive properties: [HAPPY, SAD]\n" +
+                            "There are no numbers with these properties.\n");
+                    continue;
+                }
+
             }
 
 
@@ -122,6 +128,16 @@ public class Main {
     }
 
     enum Properties {
+        EVEN {
+            public boolean check(long num) {
+                return num % 2 == 0;
+            }
+        },
+        ODD {
+            public boolean check(long num) {
+                return num % 2 != 0;
+            }
+        },
         BUZZ {
             public boolean check(long num) {
                 return num % 7 == 0 || num % 10 == 7;
@@ -200,14 +216,27 @@ public class Main {
                 return true;
             }
         },
-        EVEN {
+        HAPPY {
             public boolean check(long num) {
-                return num % 2 == 0;
+                String number = String.valueOf(num);
+                String[] numArr = number.split("");
+                long sum = 0;
+                for (String s : numArr) {
+                    int n = Integer.parseInt(s);
+                    sum += Math.pow(n, 2);
+                }
+                long happy = 0;
+                numArr = String.valueOf(sum).split("");
+                for (String str : numArr) {
+                    int n = Integer.parseInt(str);
+                    happy += Math.pow(n, 2);
+                }
+                return happy == 1;
             }
         },
-        ODD {
+        SAD {
             public boolean check(long num) {
-                return num % 2 != 0;
+                return !HAPPY.check(num);
             }
         };
 
