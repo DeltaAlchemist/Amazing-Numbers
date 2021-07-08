@@ -57,10 +57,19 @@ public class Main {
 
             if (props != null) {
                 HashSet<String> hashSet = new HashSet<>(Arrays.asList("EVEN", "ODD", "BUZZ", "DUCK", "PALINDROMIC",
-                        "GAPFUL", "SPY", "SQUARE", "SUNNY", "JUMPING", "HAPPY"));
+                        "GAPFUL", "SPY", "SQUARE", "SUNNY", "JUMPING", "HAPPY", "SAD", "NOT_EVEN", "NOT_ODD", "NOT_BUZZ",
+                        "NOT_DUCK", "NOT_PALINDROMIC", "NOT_GAPFUL", "NOT_SPY", "NOT_SQUARE", "NOT_SUNNY", "NOT_JUMPING",
+                        "NOT_HAPPY", "NOT_SAD"));
 
                 for (int i = 0; i < props.size(); ++i) {
-                    props.setElementAt(props.elementAt(i).toUpperCase(Locale.ROOT), i);
+                    if (props.elementAt(i).startsWith("-")) {
+                        StringBuilder str = new StringBuilder(props.elementAt(i));
+                        str.replace(0, 1, "not_");
+                        String notProps = str.substring(0);
+                        props.setElementAt(notProps.toUpperCase(Locale.ROOT), i);
+                    } else {
+                        props.setElementAt(props.elementAt(i).toUpperCase(Locale.ROOT), i);
+                    }
                 }
 
                 Vector<String> wrong = new Vector<>();
@@ -75,7 +84,7 @@ public class Main {
 
                 if (wrong.size() > 0) {
                     if (wrong.size() == 1) {
-                        System.out.printf("The property [%sc] is wrong.)", wrong.elementAt(0));
+                        System.out.printf("The property [%s] is wrong.\n", wrong.elementAt(0));
                     } else {
                         System.out.print("The properties [");
                         for (int i = 0; i < wrong.size() - 1; ++i) {
@@ -84,33 +93,14 @@ public class Main {
                         System.out.print(wrong.elementAt(wrong.size() - 1) + "] are wrong\n");
                     }
                     System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, " +
-                            "SQUARE, SUNNY, JUMPING, HAPPY]\n");
+                            "SQUARE, SUNNY, JUMPING, HAPPY, SAD]");
                     continue;
                 }
 
-                if (properties.contains(Properties.ODD) && properties.contains(Properties.EVEN)) {
-                    System.out.print("\nThe request contains mutually exclusive properties: [ODD, EVEN]\n" +
-                            "There are no numbers with these properties.\n");
+                if (!checkExclusives(properties)) {
                     continue;
                 }
-                if (properties.contains(Properties.SQUARE) && properties.contains(Properties.SUNNY)) {
-                    System.out.print("\nThe request contains mutually exclusive properties: [SQUARE, SUNNY]\n" +
-                            "There are no numbers with these properties.\n");
-                    continue;
-                }
-                if (properties.contains(Properties.DUCK) && properties.contains(Properties.SPY)) {
-                    System.out.print("\nThe request contains mutually exclusive properties: [DUCK, SPY]\n" +
-                            "There are no numbers with these properties.\n");
-                    continue;
-                }
-                if (properties.contains(Properties.HAPPY) && properties.contains(Properties.SAD)) {
-                    System.out.print("\nThe request contains mutually exclusive properties: [HAPPY, SAD]\n" +
-                            "There are no numbers with these properties.\n");
-                    continue;
-                }
-
             }
-
 
             if (!ism) {
                 printProps(n);
@@ -218,25 +208,81 @@ public class Main {
         },
         HAPPY {
             public boolean check(long num) {
-                String number = String.valueOf(num);
-                String[] numArr = number.split("");
-                long sum = 0;
-                for (String s : numArr) {
-                    int n = Integer.parseInt(s);
-                    sum += Math.pow(n, 2);
+                Set<Long> digits = new HashSet<>();
+                while (digits.add(num)) {
+                    long result = 0;
+                    while (num > 0) {
+                        result += Math.pow(num % 10, 2);
+                        num = num / 10;
+                    }
+                    num = result;
                 }
-                long happy = 0;
-                numArr = String.valueOf(sum).split("");
-                for (String str : numArr) {
-                    int n = Integer.parseInt(str);
-                    happy += Math.pow(n, 2);
-                }
-                return happy == 1;
+                return num == 1;
             }
         },
         SAD {
             public boolean check(long num) {
                 return !HAPPY.check(num);
+            }
+        },
+        NOT_EVEN {
+            public boolean check(long num) {
+                return !EVEN.check(num);
+            }
+        },
+        NOT_ODD {
+            public boolean check(long num) {
+                return !ODD.check(num);
+            }
+        },
+        NOT_BUZZ {
+            public boolean check(long num) {
+                return !BUZZ.check(num);
+            }
+        },
+        NOT_DUCK {
+            public boolean check(long num) {
+                return !DUCK.check(num);
+            }
+        },
+        NOT_PALINDROMIC {
+            public boolean check(long num) {
+                return !PALINDROMIC.check(num);
+            }
+        },
+        NOT_GAPFUL {
+            public boolean check(long num) {
+                return !GAPFUL.check(num);
+            }
+        },
+        NOT_SPY {
+            public boolean check(long num) {
+                return !SPY.check(num);
+            }
+        },
+        NOT_SQUARE {
+            public boolean check(long num) {
+                return !SQUARE.check(num);
+            }
+        },
+        NOT_SUNNY {
+            public boolean check(long num) {
+                return !SUNNY.check(num);
+            }
+        },
+        NOT_JUMPING {
+            public boolean check(long num) {
+                return !JUMPING.check(num);
+            }
+        },
+        NOT_HAPPY {
+            public boolean check(long num) {
+                return !HAPPY.check(num);
+            }
+        },
+        NOT_SAD {
+            public boolean check(long num) {
+                return !SAD.check(num);
             }
         };
 
@@ -244,10 +290,38 @@ public class Main {
 
     }
 
+    public static boolean checkExclusives(HashSet<Properties> p){
+        String[][] exclusiveProps = {{"EVEN", "ODD"}, {"DUCK", "SPY"}, {"SUNNY", "SQUARE"}, {"HAPPY", "SAD"},
+                {"EVEN", "NOT_EVEN"}, {"ODD", "NOT_ODD"}, {"DUCK", "NOT_DUCK"}, {"SPY", "NOT_SPY"}, {"SUNNY", "NOT_SUNNY"},
+                {"SQUARE", "NOT_SQUARE"}, {"HAPPY", "NOT_HAPPY"}, {"SAD", "NOT_SAD"}, {"NOT_EVEN", "NOT_ODD"},
+                {"NOT_DUCK", "NOT_SPY"}, {"NOT_SUNNY", "NOT_SQUARE"}, {"NOT_HAPPY", "NOT_SAD"}};
+        List<String> props = new ArrayList<>();
+        for (var prop : p) {
+            props.add(prop.name());
+        }
+        for (String[] exclusiveProp : exclusiveProps) {
+            if (props.contains(exclusiveProp[0]) && props.contains(exclusiveProp[1])) {
+                System.out.printf("\nThe request contains mutually exclusive properties: [%s, %s]\n" +
+                        "There are no numbers with these properties.\n", exclusiveProp[0], exclusiveProp[1]);
+                return false;
+            }
+            if (props.contains(exclusiveProp[1]) && props.contains(exclusiveProp[0])) {
+                System.out.printf("\nThe request contains mutually exclusive properties: [%s, %s]\n" +
+                        "There are no numbers with these properties.\n", exclusiveProp[1], exclusiveProp[0]);
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void printProps(long num) {
         System.out.print("\nProperties of ");
         System.out.println(num);
         for (var prop : Properties.values()) {
+            String propStr = prop.name();
+            if (propStr.startsWith("NOT_")) {
+                continue;
+            }
             System.out.printf("%12s: %s%n", prop.name().toLowerCase(), prop.check(num));
         }
     }
@@ -256,7 +330,11 @@ public class Main {
         StringBuilder res = new StringBuilder();
         res.append(num).append(" is ");
         for (var prop : Properties.values()) {
+            String propStr = prop.name();
             if (prop.check(num)) {
+                if (propStr.startsWith("NOT_")) {
+                    continue;
+                }
                 res.append(prop.name().toLowerCase()).append(", ");
             }
         }
@@ -290,6 +368,7 @@ public class Main {
         System.out.println("  * the first parameter represents a starting number;");
         System.out.println("  * the second parameter shows how many consecutive numbers are to be printed;");
         System.out.println("- two natural numbers and properties to search for;");
+        System.out.println("- a property preceded by minus must not be present in numbers;");
         System.out.println("- separate the parameters with one space;");
         System.out.println("- enter 0 to exit.");
     }
